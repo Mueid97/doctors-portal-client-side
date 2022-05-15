@@ -1,17 +1,37 @@
 import React from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../src/firebase.init'
+import Lodeing from '../share/Lodeing/Lodeing';
 const LogIn = () => {
-    const [signInWithGoogle, gUser, gLoading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const navigate = useNavigate()
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useSignInWithEmailAndPassword(auth);
 
-    if (gUser) {
-        console.log(gUser);
+      let signInError;
+
+    if(loading||gLoading){
+        return <Lodeing></Lodeing>
+    }
+
+    if(error||gError){
+        signInError = <p className='text-red-500'>{error?.message||gError?.message}</p>
+    }
+      
+    if (user||gUser) {
+        navigate('/appoinment');
     }
 
     const onSubmit = data => {
-        console.log(data)
+        console.log(data);
+        signInWithEmailAndPassword(data.email, data.password)
     };
 
     return (
@@ -66,11 +86,12 @@ const LogIn = () => {
                             {errors.password?.type === 'minLength' &&  <span className="label-text-alt text-red-500">{errors.password.message}</span>}    
                             </label>
                         </div>
+                        {signInError}
                         <input className='btn  w-full max-w-xs' type="submit" value='Login' />
                     </form>
-
+                              <p>New to Doctors portal <Link to='/register' className='text-secondary' >Create a New Account</Link></p>
                     <div className="divider">OR</div>
-                    <button className="btn btn-outline">Continue With Google</button>
+                    <button onClick={()=>signInWithGoogle() } className="btn btn-outline">Continue With Google</button>
                 </div>
             </div>
         </div>
