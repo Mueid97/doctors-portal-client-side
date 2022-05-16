@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../src/firebase.init'
 import Loading from '../share/Loading/Loading';
 
@@ -14,9 +14,17 @@ const Register = () => {
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    console.log(user)
     const [updateProfile, updating, updatError] = useUpdateProfile(auth);
+    const location =useLocation();
+    const navigate = useNavigate();
+    let from = location.state?.from?.pathname || "/";
 
-    const navigate = useNavigate()
+    useEffect(()=>{
+        if (user || gUser) {
+            navigate(from, { replace: true });
+        }
+    },[user, gUser, from, navigate])
 
     let signInError;
 
@@ -28,9 +36,7 @@ const Register = () => {
         signInError = <p className='text-red-500'>{error?.message || gError?.message}</p>
     }
 
-    if (user || gUser) {
-        console.log(user || gUser);
-    }
+    
 
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password);
