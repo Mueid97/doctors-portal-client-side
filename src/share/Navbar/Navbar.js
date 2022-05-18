@@ -10,12 +10,16 @@ const Navbar = () => {
     const logout = () => {
         signOut(auth);
       };
+
     const manuItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/appoinment'>Appointment</Link></li>
         <li><Link to='/reviews'>Reviews</Link></li>
         <li><Link to='/contact'>Contact Us</Link></li>
         <li><Link to='/about'>About</Link></li>
+        {
+            user && <li><Link to='/dashboard'>DashBoard</Link></li>
+        }
         { user ? <button onClick={logout} className="btn btn-ghost bg-gradient-to-r from-secondary to-primary">Sign Out</button>:
             <li><Link to='/login'>Log in</Link></li>}
     </>
