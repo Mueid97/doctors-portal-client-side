@@ -19,6 +19,7 @@ const MyAppoinment = () => {
     if(loading){
         return <Loading></Loading>
     }
+    
     return (
         <div>
             <h1>My Appionments: {appionment.length} </h1>
@@ -39,7 +40,7 @@ const MyAppoinment = () => {
                     </thead>
                     <tbody>
                        {
-                           appionment.map((a, index)=><tr className='text-center'>
+                           appionment.map((a, index)=><tr className='text-center' key={a._id}>
                                
                             <th>{index+1}</th>
                             <td>{a.patiantName}</td>
