@@ -13,7 +13,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
     const handleBooking = e => {
         e.preventDefault();
         const slot = e.target.slot.value;
-        console.log(_id, name, slot, date);
+        
         //backend
         const booking = {
             treatmentId: _id,
@@ -29,13 +29,13 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
         fetch('http://localhost:5000/booking', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json',
+                'content-type': 'application/json'
             },
             body: JSON.stringify(booking)
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+               console.log(data)
                 if(data.success){
                     toast(`Appoinment is set ${formatedDate} at ${slot}`)
                 }else{
@@ -44,7 +44,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                 refetch();
                 //modal hide
                 setTreatment(null);
-            })
+            });
 
     }
 
@@ -65,8 +65,8 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
                     <div className=''>
                         <h3 className="font-bold text-lg text-center text-secondary">{name}</h3>
                         <form onSubmit={handleBooking} className='grid grid-cols-1 gap-4 justify-items-center mt-2'>
-                            <input type="text" name='name' disabled value={user?.displayName || ' '} className="input input-bordered  w-full max-w-xs" />
-                            <input type="email" name='email' disabled value={user?.email || ' '} className="input input-bordered  w-full max-w-xs" />
+                            <input type="text" name='name' disabled value={user?.displayName || ''} className="input input-bordered  w-full max-w-xs" />
+                            <input type="email" name='email' disabled value={user?.email || ''} className="input input-bordered  w-full max-w-xs" />
                             <input type="text" name='phone' placeholder="Phone" className="input input-bordered  w-full max-w-xs" />
                             <input type="text" value={format(date, 'PP')} className="input input-bordered  w-full max-w-xs" disabled />
                             <select name='slot' className="select select-bordered w-full max-w-xs">

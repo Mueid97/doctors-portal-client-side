@@ -10,12 +10,12 @@ const DashBoard = () => {
             <Outlet />
             
                 {/* <!-- Page content here --> */}
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+                
 
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side ">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-                <ul className="menu px-12 overflow-y-auto w-70 bg-base-100 text-base-content">
+                <ul className="menu lg:px-12 overflow-y-auto w-70 bg-base-200 text-base-content">
                     {/* <!-- Sidebar content here --> */}
                     <li><Link to='/dashboard'>My Appoinment</Link></li>
                     <li><Link to='/dashboard/review'>My Review</Link></li>
